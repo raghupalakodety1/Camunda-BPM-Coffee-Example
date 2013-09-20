@@ -4,9 +4,6 @@
     <bpmn2:startEvent id="StartEvent_1" activiti:formKey="embedded:app:forms/request-loan.html" name="Start Event">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:endEvent id="EndEvent_1" name="End Event">
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
-    </bpmn2:endEvent>
     <bpmn2:userTask id="Approve" activiti:assignee="john" activiti:formKey="embedded:app:forms/approve-loan.html" name="User Task">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
@@ -18,6 +15,9 @@
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="End Event">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Loan Approval Process">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LoanApproval">
@@ -25,7 +25,10 @@
         <dc:Bounds height="36.0" width="36.0" x="157.0" y="175.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="631.0" y="179.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="640.0" y="175.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="17.0" width="55.0" x="631.0" y="216.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="Approve">
         <dc:Bounds height="80.0" width="100.0" x="264.0" y="153.0"/>
@@ -46,9 +49,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_2">
         <di:waypoint xsi:type="dc:Point" x="540.0" y="193.0"/>
-        <di:waypoint xsi:type="dc:Point" x="585.0" y="193.0"/>
-        <di:waypoint xsi:type="dc:Point" x="585.0" y="197.0"/>
-        <di:waypoint xsi:type="dc:Point" x="631.0" y="197.0"/>
+        <di:waypoint xsi:type="dc:Point" x="640.0" y="193.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="585.0" y="193.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
