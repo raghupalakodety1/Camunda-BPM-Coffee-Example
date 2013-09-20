@@ -32,6 +32,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<repositories>
@@ -41,4 +51,5 @@
 			<url>https://app.camunda.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
+
 </project>
