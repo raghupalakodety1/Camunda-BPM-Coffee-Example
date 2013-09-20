@@ -19,6 +19,29 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+<<<<<<< HEAD
+=======
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.0.SP1</version>
+		</dependency>
+		<dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-entitymanager</artifactId>
+	      <version>4.2.5.Final</version>
+    	</dependency>
+    	<dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-validator</artifactId>
+	      <version>5.0.1.Final</version>
+	    </dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+>>>>>>> 9837de577ffc469421b7667a47b076b22587fdd6
 	</dependencies>
 
 	<build>
@@ -46,6 +69,18 @@
 
 	<repositories>
 		<repository>
+<<<<<<< HEAD
+=======
+	      <id>central</id>
+	      <name>Maven Repository Switchboard</name>
+	      <layout>default</layout>
+	      <url>http://repo1.maven.org/maven2</url>
+	      <snapshots>
+	        <enabled>false</enabled>
+	      </snapshots>
+    	</repository>
+		<repository>
+>>>>>>> 9837de577ffc469421b7667a47b076b22587fdd6
 			<id>camunda-bpm-nexus</id>
 			<name>camunda-bpm-nexus</name>
 			<url>https://app.camunda.com/nexus/content/groups/public</url>

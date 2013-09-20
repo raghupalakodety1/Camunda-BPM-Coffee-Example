@@ -9,6 +9,7 @@
 			<property name="isScanForProcessDefinitions">true</property>
 		</properties>
 	</process-archive>
+<<<<<<< HEAD
 	<!--
 	<process-archive name="bestellprozess">
 		<process-engine>default</process-engine>
@@ -25,5 +26,7 @@
 			<property name="isScanForProcessDefinitions">true</property>
 		</properties>
 	</process-archive>
+=======
+>>>>>>> 9837de577ffc469421b7667a47b076b22587fdd6
 
 </process-application>
