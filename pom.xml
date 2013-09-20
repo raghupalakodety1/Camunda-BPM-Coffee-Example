@@ -5,6 +5,7 @@
 	<artifactId>coffee-process</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.camunda.bpm</groupId>
@@ -24,21 +25,22 @@
 			<version>3.3.0.SP1</version>
 		</dependency>
 		<dependency>
-	      <groupId>org.hibernate</groupId>
-	      <artifactId>hibernate-entitymanager</artifactId>
-	      <version>4.2.5.Final</version>
-    	</dependency>
-    	<dependency>
-	      <groupId>org.hibernate</groupId>
-	      <artifactId>hibernate-validator</artifactId>
-	      <version>5.0.1.Final</version>
-	    </dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.0.1.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -50,6 +52,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -61,20 +64,22 @@
 			</resource>
 		</resources>
 	</build>
+
 	<repositories>
 		<repository>
-	      <id>central</id>
-	      <name>Maven Repository Switchboard</name>
-	      <layout>default</layout>
-	      <url>http://repo1.maven.org/maven2</url>
-	      <snapshots>
-	        <enabled>false</enabled>
-	      </snapshots>
-    	</repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>camunda-bpm-nexus</id>
 			<name>camunda-bpm-nexus</name>
 			<url>https://app.camunda.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
+
 </project>
