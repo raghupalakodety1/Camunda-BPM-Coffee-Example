@@ -1,0 +1,67 @@
+Anleitung zum:
+ - Umstellen der H2 default-Datasources der Camunda-Engine auf MySql
+ - Hinzufügen einer neuen MySQL Datasource für die Coffee Applikation
+
+
+Schritte:
+
+ (0)    Camunda-JBoss vorher stoppen
+
+ (1)    Installieren und Starten von MySQL Community Edition
+ 
+ (2)    Installieren von MySQLWorkbench (grafische Oberfläche für MySQL)
+         --> Benutzer ist "root", Passwort ist leer
+ 
+ (3)    Leere DB-Schemata in MySQL anlegen.
+        --> In der Workbench folgende Befehle ausführen:
+                   CREATE SCHEMA `Camunda` ;
+                   CREATE SCHEMA `Coffee` ;
+                   CREATE SCHEMA `Cycle` ;
+ 
+ (4)    Im Camunda-JBoss muss zunächst der MySql-Connector (Treiber) als Modul installiert werden.
+        Dazu bitte folgende Schritte vornehmen:
+         - Ordner anlegen: camunda-bpm-jboss(...)/server/jboss-(...)/modules/com/mysql/main
+         - Die beiden Dateien "module.xml" und "mysql-connector-(...).jar" in das Verzeichnis kopieren
+ 
+ (5)    Nun müssen noch die Datasources in der standalone.xml des JBoss angepasst bzw. eingetragen werden:
+         - Datei camunda-bpm-jboss(...)/server/jboss-(...)/standalone/configuration/standalone.xml öffnen
+         - Den bestehenden XML-Block "<subsystem xmlns="urn:jboss:domain:datasources:1.1">...</subsystem>" 
+           komplett ersetzen durch folgenden Block:
+           
+        <subsystem xmlns="urn:jboss:domain:datasources:1.1">
+            <datasources>
+                <datasource jta="true" jndi-name="java:jboss/datasources/ProcessEngine" pool-name="ProcessEngine" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://localhost:3306/Camunda</connection-url>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>root</user-name>
+                    </security>
+                </datasource>
+                <datasource jta="true" jndi-name="java:jboss/datasources/CoffeeDS" pool-name="CoffeeDS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://localhost:3306/Coffee</connection-url>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>root</user-name>
+                    </security>
+                </datasource>
+                <datasource jta="true" jndi-name="java:jboss/datasources/CycleDS" pool-name="CycleDS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:mysql://localhost:3306/Cycle</connection-url>
+                    <driver>mysql</driver>
+                    <security>
+                        <user-name>root</user-name>
+                    </security>
+                </datasource>
+                <drivers>
+                    <driver name="h2" module="com.h2database.h2">
+                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="mysql" module="com.mysql"/>
+                </drivers>
+            </datasources>
+        </subsystem>
+ 
+ (6)    Das wars!
+        Jetzt kann der Camunda-JBoss gestartet werden, die beiden Datenbank-Schemas Camunda und Cycle werden
+        automatisch mit Tabellen befüllt
+ 
+ 
