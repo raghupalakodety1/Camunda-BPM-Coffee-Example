@@ -1,70 +1,71 @@
 package dojo.bpm.camunda.coffee.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-
-@Entity(name="kaffee")
+@Entity
 public class Kaffee {
 
 	@Id
-	@GeneratedValue
-	@Column(name="kaffeeId", nullable=false)
-	private long kaffeeId;
-	private float preis;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long id;
+	@Column(nullable = false, length = 100)
 	private String name;
+	@Column(nullable = false)
+	private BigDecimal preis;
+	@Column(length = 500)
 	private String kommentar;
-	
-	private Set<Bestellung> bestellungen = new HashSet<Bestellung>();
+
+	@ManyToMany(mappedBy = "kaffees")
+	private List<Bestellung> bestellungen = new ArrayList<Bestellung>();
+
 	public long getId() {
-		return kaffeeId;
+		return id;
 	}
+
 	public void setId(long id) {
-		this.kaffeeId = id;
+		this.id = id;
 	}
-	public float getPreis() {
+
+	public BigDecimal getPreis() {
 		return preis;
 	}
-	public void setPreis(float preis) {
+
+	public void setPreis(BigDecimal preis) {
 		this.preis = preis;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getKommentar() {
 		return kommentar;
 	}
+
 	public void setKommentar(String kommentar) {
 		this.kommentar = kommentar;
 	}
-	
-	@ManyToMany
-	@JoinTable(name="kaffee-pro-bestellung", 
-		joinColumns= {@JoinColumn(name="kaffeeId")},
-		inverseJoinColumns={@JoinColumn(name="bestellungId") })
-	public Set<Bestellung> getBestellungen() {
-		return bestellungen;
-	}
-	public void setBestellungen(Set<Bestellung> bestellungen) {
-		this.bestellungen = bestellungen;
-	}
-	
-	
-	
-}
 
-//kaffee-pro-bestellung
-//id-k
-//id-b
-//menge
+	public List<Bestellung> getBestellungen() {
+		return Collections.unmodifiableList(bestellungen);
+	}
+
+	public void addBestellung(Bestellung bestellung) {
+		this.bestellungen.add(bestellung);
+	}
+
+}
