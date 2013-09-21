@@ -1,34 +1,56 @@
 package dojo.bpm.camunda.coffee.dao;
 
-import java.util.List;
+import dojo.bpm.camunda.coffee.model.Kaffee;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import dojo.bpm.camunda.coffee.model.Kaffee;
+import java.util.List;
 
 public class KaffeeDao {
 
-	@PersistenceContext
-	EntityManager em;
+    @PersistenceContext
+    EntityManager em;
 
-	public void persist(Kaffee kaffee) {
-		if (em.contains(kaffee)) {
-			em.merge(kaffee);
-		} else {
-			em.persist(kaffee);
-		}
-	}
+    public void persist(Kaffee kaffee) {
+        try {
+            em.getTransaction().begin();
+            if (em.contains(kaffee)) {
+                em.merge(kaffee);
+            } else {
+                em.persist(kaffee);
+            }
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+    }
 
-	public Kaffee find(long id) {
-		return em.find(Kaffee.class, id);
-	}
+    public Kaffee find(long id) {
+        try {
+            em.getTransaction().begin();
+            Kaffee kaffee = em.find(Kaffee.class, id);
+            em.getTransaction().commit();
+            return kaffee;
+        } catch (RuntimeException e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+    }
 
-	public List<Kaffee> getAllKaffees() {
-		TypedQuery<Kaffee> q = em.createQuery("FROM Kaffee ORDER BY name",
-				Kaffee.class);
-		return q.getResultList();
-	}
+    public List<Kaffee> getAllKaffees() {
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Kaffee> q = em.createQuery("FROM Kaffee ORDER BY name",
+                    Kaffee.class);
+            List<Kaffee> list = q.getResultList();
+            em.getTransaction().commit();
+            return list;
+        } catch (RuntimeException e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+    }
 
 }
