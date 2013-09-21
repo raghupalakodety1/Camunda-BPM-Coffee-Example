@@ -3,7 +3,7 @@ package dojo.bpm.camunda.coffee;
 import org.camunda.bpm.application.ProcessApplication;
 import org.camunda.bpm.application.impl.ServletProcessApplication;
 
-@ProcessApplication("Loan Approval App")
+@ProcessApplication("Coffee Order App")
 public class TutorialApplication extends ServletProcessApplication {
 
 }
