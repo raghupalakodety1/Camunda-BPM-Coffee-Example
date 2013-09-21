@@ -8,9 +8,10 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class KaffeeDao {
-
-    @PersistenceContext
     EntityManager em;
+	public KaffeeDao(EntityManager em) {
+		this.em=em;
+	}
 
     public void persist(Kaffee kaffee) {
         try {
