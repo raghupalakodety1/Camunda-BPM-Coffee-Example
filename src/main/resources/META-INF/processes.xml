@@ -9,7 +9,7 @@
 			<property name="isScanForProcessDefinitions">true</property>
 		</properties>
 	</process-archive>
-	<!--
+
 	<process-archive name="bestellprozess">
 		<process-engine>default</process-engine>
 		<properties>
@@ -17,7 +17,6 @@
 			<property name="isScanForProcessDefinitions">true</property>
 		</properties>
 	</process-archive>
-	-->
 	<process-archive name="kaffeedaten-pflegen">
 		<process-engine>default</process-engine>
 		<properties>
