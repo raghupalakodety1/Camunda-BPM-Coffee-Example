@@ -16,7 +16,7 @@ import javax.persistence.ManyToMany;
 public class Kaffee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@Column(nullable = false, length = 100)
 	private String name;
@@ -25,6 +25,15 @@ public class Kaffee {
 	@Column(length = 500)
 	private String kommentar;
 
+	public Kaffee() {
+	}
+
+	public Kaffee(String name, BigDecimal preis, String kommentar) {
+		this.name = name;
+		this.preis = preis;
+		this.kommentar = kommentar;
+	}
+
 	@ManyToMany(mappedBy = "kaffees")
 	private List<Bestellung> bestellungen = new ArrayList<Bestellung>();
 
@@ -32,39 +41,23 @@ public class Kaffee {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public BigDecimal getPreis() {
 		return preis;
-	}
-
-	public void setPreis(BigDecimal preis) {
-		this.preis = preis;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getKommentar() {
 		return kommentar;
-	}
-
-	public void setKommentar(String kommentar) {
-		this.kommentar = kommentar;
 	}
 
 	public List<Bestellung> getBestellungen() {
 		return Collections.unmodifiableList(bestellungen);
 	}
 
-	public void addBestellung(Bestellung bestellung) {
+	void addBestellung(Bestellung bestellung) {
 		this.bestellungen.add(bestellung);
 	}
 
