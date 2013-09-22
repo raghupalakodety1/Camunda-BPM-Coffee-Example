@@ -1,69 +1,51 @@
 package dojo.bpm.camunda.coffee;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.camunda.bpm.application.ProcessApplication;
-import org.camunda.bpm.application.impl.ServletProcessApplication;
-import org.camunda.bpm.engine.FormService;
-import org.camunda.bpm.engine.HistoryService;
-import org.camunda.bpm.engine.IdentityService;
-import org.camunda.bpm.engine.ManagementService;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.ProcessEngines;
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
 
-@ProcessApplication("Kaffee Bestellung App")
-public class DoppelteBestellungApplication extends ServletProcessApplication {
+public class DoppelteBestellungApplication implements JavaDelegate {
 
-	public void findeDoppelteInstanz(String auftraggeber) {
-		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+	// http://docs.camunda.org/guides/user-guide/#process-engine-process-engine-concepts-activity-instances
+	// runtimeService.setVariableLocal(name, value);
+	public void execute(DelegateExecution execution) throws Exception {
 
-		RuntimeService runtimeService = processEngine.getRuntimeService();
-		RepositoryService repositoryService = processEngine
-				.getRepositoryService();
-		TaskService taskService = processEngine.getTaskService();
-		ManagementService managementService = processEngine
-				.getManagementService();
-		IdentityService identityService = processEngine.getIdentityService();
-		HistoryService historyService = processEngine.getHistoryService();
-		FormService formService = processEngine.getFormService();
+		String id = execution.getId();
+		String procInstanceID = execution.getProcessInstanceId();
+		String procBusinessKey = execution.getProcessBusinessKey();
+		String procDefinitionId = execution.getProcessDefinitionId();
 
-		// http://docs.camunda.org/guides/user-guide/#process-engine-process-engine-concepts-activity-instances
-		// runtimeService.setVariableLocal(name, value);
+		String customer = (String) execution.getVariable("customerId");
+		Map<String, Object> variableMap = execution.getVariables();
+		Set<String> variableNames = execution.getVariableNames();
 
-		List<ProcessInstance> prozesse = findeProzesse(runtimeService,
-				"bestellprozess", "auftraggeber", "robert");
+		String actInstanceID = execution.getActivityInstanceId();
+		String currentActID = execution.getCurrentActivityId();
+		String currentActName = execution.getCurrentActivityName();
 
-		if (existierenWeitereInstanzen(prozesse)) {
-			System.out.println("ja");
-		}
-	}
+		if (id.equals(procInstanceID))
+			System.out.println("getId entspricht getProcessInstanceId");
+		else
+			System.out.println("getId ungleich getProcessInstanceId !!!!!!!!");
 
-	private List<ProcessInstance> findeProzesse(RuntimeService runtimeService,
-			String prozess, String key, String value) {
+		System.out.println("ID: " + id);
+		System.out.println("Prozess Instanz ID: " + procInstanceID);
+		System.out.println("Prozess Business Key: " + procBusinessKey);
+		System.out.println("Prozess Definition ID " + procDefinitionId);
 
-		// http://docs.camunda.org/guides/user-guide/#process-engine-process-engine-concepts-querying-for-process-instances
-		return runtimeService.createProcessInstanceQuery()
-				.processDefinitionKey(prozess).variableValueEquals(key, value)
-				.list();
+		System.out.println("Wert der customerID: " + customer);
+		System.out.println("Liste der PIVs: " + variableMap);
+		System.out.println("Namen aller Variablen: " + variableNames);
 
-	}
+		System.out.println("Aktivitäten Instanz ID: " + actInstanceID);
+		System.out.println("aktuelle Aktivitäten ID: " + currentActID);
+		System.out.println("aktueller Aktivitäten Name: " + currentActName);
 
-	private boolean existierenWeitereInstanzen(List<ProcessInstance> prozesse) {
-		boolean result = false;
-
-		if (prozesse.size() > 1) {
-			result = true;
-		}
-
-		for (ProcessInstance p : prozesse) {
-			System.out.println(p.getProcessDefinitionId());
-			System.out.println(p.getId());
-		}
-
-		return result;
+		System.out.println("###### CamundaService ######");
+		CamundaService.getInstance().printInfosOfProcesses("aufgabe-erhalten",
+				"auftraggeber", customer);
+		CamundaService.getInstance().printTaskListFor(customer);
 	}
 }
