@@ -6,7 +6,7 @@ import java.util.Set;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
-public class DoppelteBestellungApplication implements JavaDelegate {
+public class CheckMultipleProcessesDelegate implements JavaDelegate {
 
 	// http://docs.camunda.org/guides/user-guide/#process-engine-process-engine-concepts-activity-instances
 	// runtimeService.setVariableLocal(name, value);
